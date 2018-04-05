@@ -118,23 +118,37 @@ const UrlUtil = {
     let str = input.trim()
     const scheme = UrlUtil.getScheme(str)
 
-    if (str.toLowerCase() === 'localhost') {
+    if (str.toLowerCase() === 'localhost') {      
       return false
     }
     if (case1Reg.test(str)) {
+      console.log(" 1) ",str );
       return true
     }
+    
     if (case2Reg.test(str) || !case3Reg.test(str) ||
         (scheme === undefined && /\s/g.test(str))) {
-      return true
+          console.log(" 2) case2Reg",case2Reg.test(str) );
+          console.log(" 3) case3Reg",!case3Reg.test(str) );
+          console.log(" 4) case3Reg",str );
+          //console.log(" 5) case3Reg",/\s/g.test(str) );
+          if (/\s/g.test(str)){
+            //str = /\s/%20/g.test(str);
+          } else {
+            return true;
+          }
+      //return true
     }
     if (case4Reg.test(str)) {
+      console.log(" 3) ",str );
       return !UrlUtil.canParseURL(str)
     }
     if (scheme && (scheme !== fileScheme)) {
+      console.log(" scheme) ",str );
       return !caseDomain.test(str + '/')
     }
     str = UrlUtil.prependScheme(str)
+    console.log(" prepend) ",str );
     return !UrlUtil.canParseURL(str)
   },
 

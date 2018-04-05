@@ -164,6 +164,9 @@ describe('urlutil', function () {
     it('calls prependScheme', function () {
       assert.equal(urlUtil.getUrlFromInput('/file/path/to/file'), 'file:///file/path/to/file')
     })
+    it('calls prependScheme with space in file name', function() {
+      assert.equal(urlUtil.getUrlFromInput ('/home/omak/Documents/dog cat.txt'), 'file:///home/omak/Documents/dog%20cat.txt')  
+    })
   })
 
   describe('isURL', function () {

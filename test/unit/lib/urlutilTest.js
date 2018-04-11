@@ -101,6 +101,12 @@ describe('urlutil', function () {
       it('has custom protocol', function () {
         assert.equal(urlUtil.isNotURL('brave://test'), false)
       })
+      it('is a url which contains a space in the query', function() {
+        assert.equal(urlUtil.isNotURL('https://www.google.ca/search?q=dog cat'), false)
+      })
+      it('is an absolute file path with a space in the files', function() {
+        assert.equal(urlUtil.isNotURL('/home/omak/Documents/dog cat.txt'), false)
+      })
     })
 
     describe('returns true when input:', function () {
@@ -164,8 +170,8 @@ describe('urlutil', function () {
     it('calls prependScheme', function () {
       assert.equal(urlUtil.getUrlFromInput('/file/path/to/file'), 'file:///file/path/to/file')
     })
-    it('calls prependScheme with space in file name', function() {
-      assert.equal(urlUtil.getUrlFromInput ('/home/omak/Documents/dog cat.txt'), 'file:///home/omak/Documents/dog%20cat.txt')  
+    it('calls prependScheme with space in file name', function () {
+      assert.equal(urlUtil.getUrlFromInput('/home/omak/Documents/dog cat.txt'), 'file:///home/omak/Documents/dog%20cat.txt')
     })
   })
 

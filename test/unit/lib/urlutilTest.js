@@ -101,10 +101,10 @@ describe('urlutil', function () {
       it('has custom protocol', function () {
         assert.equal(urlUtil.isNotURL('brave://test'), false)
       })
-      it('is a url which contains a space in the query', function() {
+      it('is a url which contains a space in the query', function () {
         assert.equal(urlUtil.isNotURL('https://www.google.ca/search?q=dog cat'), false)
       })
-      it('is an absolute file path with a space in the files', function() {
+      it('is an absolute file path with a space in the files', function () {
         assert.equal(urlUtil.isNotURL('/home/omak/Documents/dog cat.txt'), false)
       })
     })

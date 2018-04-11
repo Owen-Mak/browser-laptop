@@ -101,7 +101,7 @@ const UrlUtil = {
     if (typeof input !== 'string') {
       return true
     }
-    
+
     // for cases where we have scheme and we dont want spaces in domain names
     const caseDomain = /^[\w]{2,5}:\/\/[^\s/]+\//
     // for cases, quoted strings
@@ -117,48 +117,48 @@ const UrlUtil = {
     const case4Reg = /^(data|view-source|mailto|about|chrome-extension|chrome-devtools|magnet|chrome):.*/
 
     let str = input.trim()
-    
+
     const scheme = UrlUtil.getScheme(str)
 
-    if (/\s/g.test(str) && scheme !== undefined){
-      //attempt to change query whitespace to %20      
+    if (/\s/g.test(str) && scheme !== undefined) {
+      // attempt to change query whitespace to %20
       var queryIndex = str.search(/\?.*$/)
-      if (queryIndex > 0){
+      if (queryIndex > 0) {
         var query = str.substring(queryIndex).replace(/\s/g, '%20')
-        str = str.substring(0, queryIndex) + query      
+        str = str.substring(0, queryIndex) + query
       }
-      console.log ('1: ',str)
+      console.log('1: ', str)
     }
 
     if (str.toLowerCase() === 'localhost') {
       return false
     }
-    if (case1Reg.test(str)) {      
+    if (case1Reg.test(str)) {
       return true
     }
     if (case2Reg.test(str) || !case3Reg.test(str) ||
         (scheme === undefined && /\s/g.test(str))) {
-          if (scheme === undefined && /\s/g.test(str)){
-            //check to see if undefined scheme is possibly file scheme
-            let str1 = UrlUtil.prependScheme(str)
-            console.log (str1)
-            if (UrlUtil.isFileScheme(str1)){
-              //if it is file scheme, will then replace whitespace with %20              
-              str = str.replace(' ', '%20')
-            } else {              
-              return true
-            }               
-          }else {
-            return true                
-          }
+      if (scheme === undefined && /\s/g.test(str)) {
+            // check to see if undefined scheme is possibly file scheme
+        let str1 = UrlUtil.prependScheme(str)
+        console.log(str1)
+        if (UrlUtil.isFileScheme(str1)) {
+              // if it is file scheme, will then replace whitespace with %20
+          str = str.replace(' ', '%20')
+        } else {
+          return true
+        }
+      } else {
+        return true
+      }
     }
-    if (case4Reg.test(str)) {      
+    if (case4Reg.test(str)) {
       return !UrlUtil.canParseURL(str)
     }
-    if (scheme && (scheme !== fileScheme)) {      
+    if (scheme && (scheme !== fileScheme)) {
       return !caseDomain.test(str + '/')
     }
-    str = UrlUtil.prependScheme(str)    
+    str = UrlUtil.prependScheme(str)
     return !UrlUtil.canParseURL(str)
   },
 
@@ -172,8 +172,8 @@ const UrlUtil = {
       return ''
     }
 
-    input = input.trim()    
-    //input = input.replace(' ', '%20')
+    input = input.trim()
+    // input = input.replace(' ', '%20')
     input = UrlUtil.prependScheme(input)
 
     if (UrlUtil.isNotURL(input)) {

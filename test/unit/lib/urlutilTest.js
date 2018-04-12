@@ -39,6 +39,9 @@ describe('urlutil', function () {
     it('keeps schema if already exists', function () {
       assert.equal(urlUtil.prependScheme('https://www.brave.com'), 'https://www.brave.com')
     })
+    it('calls prependScheme with space in file name', function () {
+      assert.equal(urlUtil.getUrlFromInput('/home/omak/Documents/dog cat.txt'), 'file:///home/omak/Documents/dog%20cat.txt')
+    })
   })
 
   describe('isNotURL', function () {
@@ -150,6 +153,12 @@ describe('urlutil', function () {
       })
       it('has space in schema', function () {
         assert.equal(urlUtil.isNotURL('https ://brave.com'), true)
+      })
+      it('is a url which contains a space in the query', function () {
+        assert.equal(urlUtil.isNotURL('https://www.google.ca/search?q=dog cat'), false)
+      })
+      it('is an absolute file path with a space in the files', function () {
+        assert.equal(urlUtil.isNotURL('/home/omak/Documents/dog cat.txt'), false)
       })
     })
   })

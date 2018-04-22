@@ -388,7 +388,7 @@ const UrlUtil = {
     // }
     // console.log('toPDFJSLocation-->', decodeURIComponent(url))
     // return decodeURIComponent(url)
-    return url;
+    return url
   },
 
   /**

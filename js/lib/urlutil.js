@@ -131,7 +131,7 @@ const UrlUtil = {
       return true
     }
     if (case4Reg.test(str)) {
-      //console.log (!UrlUtil.canParseURL(str), '<---->', str)
+      // console.log (!UrlUtil.canParseURL(str), '<---->', str)
       return !UrlUtil.canParseURL(str)
     }
     if (scheme && (scheme !== fileScheme)) {
@@ -345,13 +345,13 @@ const UrlUtil = {
       const querystring = require('querystring')
       const parsedUrl = urlParse(url)
       const query = querystring.parse(parsedUrl.query)
-      //console.trace("getlocationPDF-> query:", query, " query.file:", query.file)
+      // console.trace("getlocationPDF-> query:", query, " query.file:", query.file)
 
       if (query && query.file) {
         return query.file
       }
     }
-    //console.log("getlocationPDF-> url:", UrlUtil.getUrlFromPDFUrl(url))
+    // console.log("getlocationPDF-> url:", UrlUtil.getUrlFromPDFUrl(url))
     return UrlUtil.getUrlFromPDFUrl(url)
   },
 
@@ -369,9 +369,9 @@ const UrlUtil = {
 
   getPDFViewerUrl: function (url) {
     const viewerBaseUrl = `${pdfjsBaseUrl}content/web/viewer.html`
-    //if(url){
+    // if(url){
     //  console.log(`${encodeURIComponent(url)}`)
-    //}
+    // }
     return `${viewerBaseUrl}?file=${encodeURIComponent(url)}`
   },
 
@@ -383,11 +383,12 @@ const UrlUtil = {
    */
 
   toPDFJSLocation: function (url) {
-    //if (url && UrlUtil.isHttpOrHttps(url) && UrlUtil.isFileType(url, 'pdf')) {
+    // if (url && UrlUtil.isHttpOrHttps(url) && UrlUtil.isFileType(url, 'pdf')) {
     //  return UrlUtil.getPDFViewerUrl(url)
-    //}
-    //console.log('toPDFJSLocation-->', decodeURIComponent(url))
-    return  decodeURIComponent(url);
+    // }
+    // console.log('toPDFJSLocation-->', decodeURIComponent(url))
+    // return decodeURIComponent(url)
+    return url;
   },
 
   /**

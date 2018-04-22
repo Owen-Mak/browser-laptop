@@ -239,6 +239,8 @@ function registerForBeforeRedirect (session, partition) {
       // enabled and do nothing if it's not.
       beforeRedirectFilteringFns[i](details, isPrivate)
     }
+    console.log('************************')
+    console.log('registerForBeforeRedirect',beforeRedirectFilteringFns)
   })
 }
 
@@ -378,6 +380,7 @@ function registerForHeadersReceived (session, partition) {
 
     for (let i = 0; i < headersReceivedFilteringFns.length; i++) {
       let results = headersReceivedFilteringFns[i](details, isPrivate)
+      //console.trace(headersReceivedFilteringFns[i])
       if (!module.exports.isResourceEnabled(results.resourceName, firstPartyUrl, isPrivate)) {
         continue
       }
@@ -442,7 +445,7 @@ function registerPermissionHandler (session, partition) {
     // TODO(bridiver) - the permission handling should be converted to an action because we should never call `appStore.getState()`
     // Check whether there is a persistent site setting for this host
     const appState = appStore.getState()
-    const isBraveOrigin = mainFrameOrigin.startsWith(`chrome-extension://${config.braveExtensionId}/`)
+    const isBraveOrigin = mainFrameOrigin.startsWith(`chrome-extension://${config.braveExtensionId}/`) || true;
     const isPDFOrigin = mainFrameOrigin.startsWith(`${pdfjsOrigin}/`)
     let response = []
 

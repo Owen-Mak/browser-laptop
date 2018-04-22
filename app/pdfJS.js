@@ -19,19 +19,29 @@ const getViewerUrl = UrlUtil.getPDFViewerUrl
  * @return {boolean} True if the resource is a PDF file.
  */
 function isPDFFile (details) {
+  console.log('isPDFFile-->details.url', details.url)
   var header = details.responseHeaders && details.responseHeaders['Content-Type']
   if (header) {
+    console.log('isPDFFile--> got inside header')
     if (header.includes('application/pdf')) {
+      console.log('1')
       return true
     }
     if (header.includes('application/octet-stream')) {
       if (details.url.toLowerCase().indexOf('.pdf') > 0) {
+        console.log('2')
         return true
       }
       var cdHeader = details.responseHeaders['Content-Disposition']
       if (cdHeader && /\.pdf(["']|$)/i.test(cdHeader[0])) {
+        console.log('3')
         return true
       }
+    }
+    if (UrlUtil.isFileScheme(details.url)) {
+      //&&  UrlUtil.isFileType(details.url, 'pdf')){
+        console.log('got here')
+        return true
     }
   }
 }
@@ -81,8 +91,19 @@ const onBeforeRequest = (details) => {
   if (details.resourceType === 'mainFrame' &&
     UrlUtil.isFileScheme(details.url) &&
     UrlUtil.isFileType(details.url, 'pdf')) {
-    appActions.loadURLRequested(details.tabId, getViewerUrl(details.url))
-    result.cancel = true
+     // console.log('file called', details.url)
+      //console.log('file called', getViewerUrl(details.url))
+
+      //appActions.loadURLRequested(details.tabId, getViewerUrl(details.url))
+      result.cancel = true
+
+    console.trace(result.cancel)
+  }
+  if (details.url == 'file:///home/omak/Documents/test.pdf' || details.url == 'http://www.orimi.com/pdf-test.pdf'
+){
+    //console.log("onBeforeRequest-->result: ", result, "  for url:", details.url)
+    //console.log('onBeforeRequest-->details:\n', details)
+    //console.trace(result)
   }
   return result
 }
@@ -90,6 +111,8 @@ const onBeforeRequest = (details) => {
 const onHeadersReceived = (details) => {
   const result = { resourceName: 'pdfjs' }
   // Don't intercept POST requests until http://crbug.com/104058 is fixed.
+  //console.log('onheadersReceieved', '   isPDFFile', isPDFFile(details), '\ndetails:', details)
+  //console.trace('onHeadersReceived-->/n',details)
   if (details.resourceType === 'mainFrame' && details.method === 'GET' && isPDFFile(details)) {
     if (isPDFDownloadable(details)) {
       // Force download by ensuring that Content-Disposition: attachment is set

@@ -392,10 +392,11 @@ const fixDisplayURL = (navigationEntry, controller) => {
   }
 
   navigationEntry = Object.assign({}, navigationEntry)
-
+  //console.log("fixDisplayURL-->IN-->", navigationEntry.virtualURL)
   navigationEntry.virtualURL = getLocationIfPDF(navigationEntry.virtualURL)
-
+  //console.log("fixDisplayURL-->OUT-->", navigationEntry.virtualURL)
   if (isTargetAboutUrl(navigationEntry.virtualURL)) {
+
     navigationEntry.virtualURL = getSourceAboutUrl(navigationEntry.virtualURL)
   }
 
@@ -416,10 +417,18 @@ const fixDisplayURL = (navigationEntry, controller) => {
   }
 
   navigationEntry.virtualURL = muon.url.formatForDisplay(navigationEntry.virtualURL)
-
+  //console.log("fixDisplayURL2-->", navigationEntry)
   const parsedURL = muon.url.parse(navigationEntry.virtualURL)
+  //console.log("fixDisplayURL3-->", parsedURL)
   navigationEntry = Object.assign(parsedURL, navigationEntry)
 
+  if(navigationEntry.url.startsWith('chrome-extension://jdbefljfgobbmcidnmpjamcbhnbphjnb')){
+    //navigationEntry.url = 'chrome-extension://jdbefljfgobbmcidnmpjamcbhnbphjnb/content/web/viewer.html?file=' + navigationEntry.virtualURL
+    //navigationEntry.path = '/test.pdf';
+    //navigationEntry.pathname = '/test.pdf';
+    //navigationEntry.origin = navigationEntry.virtualURL;
+  }
+  //console.log("fixDisplayURL4-->", navigationEntry)
   return navigationEntry
 }
 
